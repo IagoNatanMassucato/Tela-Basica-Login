@@ -1,0 +1,64 @@
+﻿@page
+@model MeuSistema.Pages.LoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Página de Login do MeuSistema">
+        <meta name="author" content="Iago Massucato">
+        <title>MeuSistema - Login</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="~/css/login.css" rel="stylesheet">
+    </head>
+    <body>
+        <form class="form-signin" method="POST">
+            <div class="text-center mb-4">
+                <img class="mb-4" src="~/img/logo.jpg" alt="Logo" width="100" height="100">
+                <h1 class="h3 mb-3 font-weight-normal">Meu Sistema</h1>
+                <p>Acesso a Àrea Administrativa</p>
+            </div>
+            <div class="form-label-group">
+                <input asp-for="Login.Email" class="form-control" >
+                <label asp-for="Login.Email"></label>
+            </div>
+            <div class="form-label-group">
+               <input asp-for="Login.Senha" class="form-control" >
+                <label asp-for="Login.Senha"></label>
+            </div>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" asp-for="Login.Manter" value="true">Manter Conectado
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+            <p class="mt-5 mb-3 text-muted text-center">&copy; 2020-@DateTime.Now.Year</p>
+        </form>
+        <script src="~/lib/jequery/dist/jquery.min.js"></script>
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript">
+            let logado = '@Html.Raw(ViewData["Logado"])';
+            if (logado == "True"){
+                swal.fire(
+                    'Acesso Autorizado',
+                    'Seja Bem Vindo, Administrador!!!',
+                    'success'
+                ).then(function(){
+                    window.location.href = '@Url.PageLink("/Index")';
+                });
+            }
+            else if (logado == "False"){
+                swal.fire(
+                    'Acesso Negado',
+                    'Verifiquei o E-mail e Senha informados',
+                    'error'
+                );
+            };
+        </script>
+    </body>
+</html>
